@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "projects": {
+    "closure-state-demo": "apps/closure-state-demo",
+    "closure-state-demo-e2e": "apps/closure-state-demo-e2e"
+  }
+}

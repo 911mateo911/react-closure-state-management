@@ -1,0 +1,73 @@
+{
+  "root": "apps/closure-state-demo",
+  "sourceRoot": "apps/closure-state-demo/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/closure-state-demo",
+        "index": "apps/closure-state-demo/src/index.html",
+        "baseHref": "/",
+        "main": "apps/closure-state-demo/src/main.tsx",
+        "polyfills": "apps/closure-state-demo/src/polyfills.ts",
+        "tsConfig": "apps/closure-state-demo/tsconfig.app.json",
+        "assets": [
+          "apps/closure-state-demo/src/favicon.ico",
+          "apps/closure-state-demo/src/assets"
+        ],
+        "styles": ["apps/closure-state-demo/src/styles.css"],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/closure-state-demo/src/environments/environment.ts",
+              "with": "apps/closure-state-demo/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "options": {
+        "buildTarget": "closure-state-demo:build",
+        "hmr": true
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "closure-state-demo:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/closure-state-demo/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/closure-state-demo"],
+      "options": {
+        "jestConfig": "apps/closure-state-demo/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
