@@ -1,0 +1,35 @@
+{
+  "root": "libs/closure-state",
+  "sourceRoot": "libs/closure-state/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/closure-state",
+        "tsConfig": "libs/closure-state/tsconfig.lib.json",
+        "project": "libs/closure-state/package.json",
+        "entryFile": "libs/closure-state/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+        "compiler": "babel",
+        "assets": [
+          {
+            "glob": "libs/closure-state/README.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/closure-state/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  }
+}

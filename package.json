@@ -5,7 +5,8 @@
   "scripts": {
     "start": "nx serve",
     "build": "nx build",
-    "test": "nx test"
+    "test": "nx test",
+    "serve:demo-app": "nx serve closure-state-demo"
   },
   "private": true,
   "dependencies": {

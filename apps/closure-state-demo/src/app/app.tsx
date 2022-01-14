@@ -1,12 +1,13 @@
-import styles from './app.module.css';
-import NxWelcome from './nx-welcome';
+import { useClosure } from "closure-state";
+import { Input, inputState } from "./input";
 
 export function App() {
+  const [state] = useClosure(inputState);
   return (
-    <>
-      <NxWelcome title="closure-state-demo" />
-      <div />
-    </>
+    <div>
+      <Input />
+      <p>{state}</p>
+    </div>
   );
 }
 
