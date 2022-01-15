@@ -20,9 +20,8 @@ export class Store {
 
     notify(key: string, value: unknown) {
         this.subscribers[key].value = value;
-        // this.subscribers[key].callbacks.map(callback => callback(this.subscribers[key].value));
 
-        Promise.all(this.subscribers[key].callbacks.map(callback => promisify(() => { callback(this.subscribers[key].value) })))
+        Promise.all(this.subscribers[key].callbacks.map(callback => promisify(() => { callback(this.subscribers[key].value) })));
     }
 
     subscribe(key: string, callback: (value: unknown) => void) {
