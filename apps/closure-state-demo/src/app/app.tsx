@@ -1,5 +1,6 @@
 import { useClosure } from "closure-state";
 import { Input, inputState } from "./input";
+import { MergedState } from "./mergedState";
 import { ObjectState } from './objectState';
 import { Dumb } from "./objectState/dumb";
 import { Paragraph } from "./objectState/paragraph";
@@ -10,6 +11,7 @@ export function App() {
 
   return (
     <div>
+      <MergedState />
       <Input />
       <ObjectState />
       <Paragraph />
