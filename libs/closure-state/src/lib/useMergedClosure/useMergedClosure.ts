@@ -1,24 +1,27 @@
 import { useState, useEffect, useCallback } from "react";
-import { StoreInstance } from "..";
 import { createClosureReturnType } from "../createClosure";
 
 export const useMergedClosure = (...closures: createClosureReturnType<any>[]) => {
     const generateInitialValue = () => {
+
         const initialObj: { [key: string]: unknown } = {};
 
-        closures.map(({ key, getValue }) => initialObj[key] = getValue());
+        closures.map(({ getValue, name }) => initialObj[name] = getValue());
+
+        // TODO: handle name duplication
+        // TODO: handle typing
 
         return initialObj;
     }
 
     const [mergedState, setMergedState] = useState(generateInitialValue());
 
-    const handleMergedStateChange = useCallback((value: { [key: string]: unknown }) => setMergedState(value), []);
+    const handleSetMergedState = useCallback(<T>(value: T, name: string) => setMergedState(prevState => ({ ...prevState, [name]: value })), []);
 
     useEffect(() => {
-        StoreInstance.batchSubscribe(closures.map(closure => closure.key), handleMergedStateChange);
+        closures.map(({ subscribe }) => subscribe(handleSetMergedState));
 
-        return () => StoreInstance.batchUnsubscribe(closures.map(closure => closure.key), handleMergedStateChange);
+        return () => { closures.map(({ unsubscribe }) => unsubscribe(handleSetMergedState)) };
     }, [])
 
     return [mergedState]

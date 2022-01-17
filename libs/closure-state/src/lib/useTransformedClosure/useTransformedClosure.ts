@@ -1,27 +1,23 @@
-import { useState, useCallback, useEffect } from "react";
-import { StoreInstance } from "../store";
+import { useState, useEffect, useCallback } from "react";
 import { createClosureReturnType } from "../createClosure";
 
-export const useTransformedClosure = <T>(
+export const useTransformedClosure = <K, T>(
     {
         getValue,
-        key
+        subscribe,
+        unsubscribe
     }: createClosureReturnType<T>,
-    transformer: (value: T) => any
+    transformer: (value: T) => K
 ) => {
-    const initialValue = transformer(getValue());
+    const [transformedState, setTrasnformedState] = useState<K>(transformer(getValue()));
 
-    const [transformedState, setTrasnformedState] = useState<typeof initialValue>(initialValue);
-
-    const handleTransformedStateChange = useCallback(
-        (value: unknown) => setTrasnformedState(transformer(value as T)),
-        []);
+    const handleTransformedStateChange = useCallback((value: T) => setTrasnformedState(transformer(value)), []);
 
     useEffect(() => {
-        StoreInstance.subscribe(key, handleTransformedStateChange);
+        subscribe(handleTransformedStateChange);
 
-        return () => StoreInstance.unsubscribe(key, handleTransformedStateChange);
+        return () => unsubscribe(handleTransformedStateChange);
     }, [])
 
-    return [transformedState as typeof initialValue];
+    return [transformedState];
 }

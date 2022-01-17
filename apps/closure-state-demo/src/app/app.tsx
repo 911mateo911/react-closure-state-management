@@ -1,4 +1,5 @@
 import { useClosure } from "closure-state";
+import { useState } from "react";
 import { Input, inputState } from "./input";
 import { MergedState } from "./mergedState";
 import { ObjectState } from './objectState';
@@ -8,16 +9,18 @@ import { SetDumb } from "./objectState/setDumb";
 
 export function App() {
   const [state] = useClosure(inputState);
+  const [show, setShow] = useState(true);
 
   return (
     <div>
-      <MergedState />
+      {show && <MergedState />}
       <Input />
       <ObjectState />
       <Paragraph />
       <Dumb />
       <SetDumb />
       <p>{state}</p>
+      <button onClick={() => setShow(p => !p)} >Show</button>
     </div>
   );
 }
